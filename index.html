@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AttractCarsBot — crawler information | Attractor Oy</title>
+<meta name="description" content="Documentation for AttractCarsBot, the web crawler operated by Attractor Oy: how to identify it, how to control it with robots.txt, what it stores, and how to opt out.">
+<style>
+  :root { color-scheme: light dark; --fg:#111; --bg:#fff; --mut:#555; --line:#e3e3e3; --pre:#f6f6f6; }
+  @media (prefers-color-scheme: dark) { :root { --fg:#e8e8e8; --bg:#121212; --mut:#a8a8a8; --line:#2c2c2c; --pre:#1d1d1d; } }
+  body { margin:0; background:var(--bg); color:var(--fg);
+         font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  main { max-width:44rem; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+  h1 { font-size:1.75rem; line-height:1.25; margin:0 0 .35rem; }
+  h2 { font-size:1.15rem; margin:2.25rem 0 .6rem; }
+  .sub { color:var(--mut); margin:0 0 2rem; }
+  pre { background:var(--pre); border:1px solid var(--line); border-radius:6px;
+        padding:.75rem .9rem; overflow-x:auto; font-size:.9rem; }
+  code { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+  ul { padding-left:1.15rem; } li { margin:.35rem 0; }
+  footer { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+           color:var(--mut); font-size:.9rem; }
+  a { color:inherit; }
+</style>
+</head>
+<body>
+<main>
+<h1>AttractCarsBot</h1>
+<p class="sub">Crawler information — Attractor Oy, Finland (business ID 3592322-7)</p>
+
+<p><strong>AttractCarsBot</strong> is a crawler operated by Attractor Oy. If you found it in your
+server logs, this page is for you.</p>
+
+<p>It collects factual vehicle-listing data for AttractCars, a search service that helps people find
+cars for sale and sends them to the seller's own page to continue. Attractor is not a marketplace
+and never handles the sale.</p>
+
+<h2>Identifying it</h2>
+<p>Every request it makes carries both of these headers:</p>
+<pre><code>User-Agent: AttractCarsBot/1.0 (+https://attractorhq.github.io/attractcarsbot/)
+From: info@attractor.fi</code></pre>
+<p>Please identify it by that user agent rather than by address: we publish no fixed egress IP
+range, and we would rather say so than publish a range you cannot rely on. We do not disguise the
+crawler, and we do not use residential proxies, IP rotation or any other form of identity
+evasion.</p>
+
+<h2>Controlling AttractCarsBot</h2>
+<p>It implements the Robots Exclusion Protocol (RFC 9309) and checks your <code>robots.txt</code>
+before every request. To stop it entirely:</p>
+<pre><code>User-agent: AttractCarsBot
+Disallow: /</code></pre>
+<p>To allow it but ask it to slow down:</p>
+<pre><code>User-agent: AttractCarsBot
+Crawl-delay: 10</code></pre>
+<p>It also honours text-and-data-mining reservations under Article 4 of the EU DSM Directive in any
+machine-readable form — a <code>/.well-known/tdmrep.json</code> reservation, a
+<code>TDM-Reservation: 1</code> response header, or the equivalent meta tag. A reservation stops it
+regardless of what <code>robots.txt</code> says. It never attempts to bypass a CAPTCHA, a login, a
+paywall or a bot wall.</p>
+
+<h2>What AttractCarsBot stores</h2>
+<p>Only the factual fields that let somebody find a car: make, model, variant, year and first
+registration, mileage, price and currency, fuel, transmission, body type, power, colour, the country
+and town the car is in, and the URL of the listing so buyers can be sent to it.</p>
+<p>It deliberately does not store:</p>
+<ul>
+  <li><strong>Listing descriptions.</strong> Descriptive text is yours; only a hash is kept, so
+      changes can be detected without copying the words.</li>
+  <li><strong>Photographs</strong>, unless the recorded rights for that source permit it. By default
+      images are neither copied nor hot-linked, and anti-framing and hotlink controls are
+      respected.</li>
+  <li><strong>Personal data.</strong> Professional and dealer inventory is indexed; private sellers'
+      names, phone numbers, email addresses and home locations are not collected.</li>
+</ul>
+
+<h2>Opting out, corrections and takedowns</h2>
+<p>A <code>robots.txt</code> rule takes effect the next time the file is read. For anything else — a
+takedown, a correction, a rate complaint, or a question about what is stored — write to
+<a href="mailto:info@attractor.fi">info@attractor.fi</a> and a person will answer. Removal requests
+are honoured whether or not <code>robots.txt</code> is changed.</p>
+
+<h2>Contact</h2>
+<p>Questions about reuse or machine access can be sent to
+<a href="mailto:info@attractor.fi">info@attractor.fi</a>.</p>
+
+<footer>
+<p>This page is the canonical, machine-checkable identity endpoint for AttractCarsBot, published by
+Attractor Oy and referenced from the crawler's own <code>User-Agent</code> header.</p>
+<p>© 2026 Attractor Oy · Business ID 3592322-7 · <a href="mailto:info@attractor.fi">info@attractor.fi</a></p>
+</footer>
+</main>
+</body>
+</html>
